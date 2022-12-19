@@ -1,0 +1,30 @@
+<html>
+    <script src="codemirror.js"></script>
+    <link rel="stylesheet" href="codemirror.css">
+    <script src="javascript.min.js"></script>
+    <body>
+        <div class="picker"><input type="file" id="picker" name="fileList" webkitdirectory multiple></div>
+
+        <ul id="listing"></ul>
+
+    </body>
+    <script>
+        var myCodeMirror = CodeMirror(document.body, {
+            value: "function myScript(){return 100;}\n",
+            mode:  "javascript",
+            lineNumbers: true,
+        });
+
+
+        let picker = document.getElementById('picker');
+        let listing = document.getElementById('listing');
+
+        picker.addEventListener('change', e => {
+        for (let file of Array.from(e.target.files)) {
+            let item = document.createElement('li');
+            item.textContent = file.webkitRelativePath;
+            listing.appendChild(item);
+        };
+        });
+    </script>
+</html>
