@@ -1,0 +1,39 @@
+<html>
+    <!--include jquery-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <!--include bootstrap-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+    <!--include codemirror-->
+    <script src="codemirror/codemirror.js"></script>
+    <link rel="stylesheet" href="codemirror/codemirror.css">
+    <script src="codemirror/javascript.min.js"></script>
+    <!--include editors-->
+    <script src="editors/editor.js"></script>
+    <!--include filehanders-->
+    <script src="filehandlers/loadFolder.js"></script>
+
+    
+    <body>
+        <!--make a sidebar and a main content div-->
+        <div class="row">
+            <div id="sidebar" class="col-2">
+                <button class="btn btn-primary m-3" onclick="loadFolder.getFile()">Load Directory</button>
+                <button class="btn btn-outline-primary m-3">Load File</button>
+                <button class="btn btn-outline-primary m-3">Start from Scratch</button>
+            </div>
+            <div id="editor" class="col-10">
+            </div>
+        </div>
+        
+    </body>
+    <script>
+        /*var myCodeMirror = CodeMirror(document.body, {
+            value: "function myScript(){return 100;}\n",
+            mode:  "javascript",
+            lineNumbers: true,
+        });
+        */
+
+    </script>
+</html>
