@@ -57,7 +57,6 @@ loadFolder.getFile = async function() {
         }
         current.files.push(file)
     }
-    console.log(loadFolder.fileStructureObject)
     //write files to html in a nested list with the object
     let html = loadFolder.recursivelyWriteDirectoryHtml("",loadFolder.fileStructureObject)
     $('#sidebar').html(html)
@@ -74,17 +73,33 @@ loadFolder.getFile = async function() {
 }
 
 loadFolder.recursivelyWriteDirectoryHtml = function(html,directory){
-    console.log(directory)
-    html += "<ul>"
+    html += "<ul  style='color:white'>"
     for(let i = 0; i < directory.files.length; i++){
-        html += "<li onclick=editor.openFile('"+directory.files[i].uuid+"')>" + directory.files[i].name + "</li>"
+        html += "<li class='file' style='list-style-type: disc' onclick=editor.openFile('"+directory.files[i].uuid+"')>" + directory.files[i].name + "</li>"
     }
     for(let key in directory.directories){
-        html += "<li>" + key + loadFolder.recursivelyWriteDirectoryHtml("",directory.directories[key]) + "</li>"
+        html += "<li  style='list-style-type: square;'>" + key + loadFolder.recursivelyWriteDirectoryHtml("",directory.directories[key]) + "</li>"
     }
     html += "</ul>"
     return html
 }
+
+loadFolder.toggleAccordion = function(id){
+    //make the list items that are class file visible
+    let list = document.getElementById(id).querySelectorAll("li");
+    for(let i = 0; i < list.length; i++){
+        if(list[i].classList.contains('file')){
+            if(list[i].style.display == "none"){
+                list[i].style.display = ""
+            }
+            else{
+                list[i].style.display = "none"
+            }
+        }
+    }
+
+}
+
 
 loadFolder.recursivelyReadDirectory = async function(path,fileStruc,entries) {
     if(path.length > 0 && (path.indexOf(".git") != -1 || path.indexOf(".vscode") != -1)){
@@ -92,7 +107,6 @@ loadFolder.recursivelyReadDirectory = async function(path,fileStruc,entries) {
     }
     for await (let entry of entries) {
         entry = entry[1]
-        console.log(entry);
         
         //get the file contents, name, and path in an object and push it to fileStructure
         let fileData = {}
