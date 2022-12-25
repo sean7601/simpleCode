@@ -58,7 +58,7 @@ loadFolder.getFile = async function() {
         current.files.push(file)
     }
     //write files to html in a nested list with the object
-    let html = loadFolder.recursivelyWriteDirectoryHtml("",loadFolder.fileStructureObject)
+    let html = '<h1 style="color:whitesmoke">Browser IDE</h1>' + loadFolder.recursivelyWriteDirectoryHtml("",loadFolder.fileStructureObject)
     $('#sidebar').html(html)
 
     /*
