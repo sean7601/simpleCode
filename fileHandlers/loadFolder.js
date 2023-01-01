@@ -58,8 +58,11 @@ loadFolder.getFile = async function() {
         current.files.push(file)
     }
     //write files to html in a nested list with the object
-    let html = '<h1 style="color:whitesmoke">Browser IDE</h1>' + loadFolder.recursivelyWriteDirectoryHtml("",loadFolder.fileStructureObject)
+    let html = '<h1 style="color:whitesmoke">Browser IDE</h1><button id="saveButton" class="btn btn-outline-primary">Save All</button>' + loadFolder.recursivelyWriteDirectoryHtml("",loadFolder.fileStructureObject)
     $('#sidebar').html(html)
+    $("#saveButton").click(function(){
+        editor.saveAll()
+    })
 
     /*
       const writableStream = await fileStructure[0].entry.createWritable();

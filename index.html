@@ -11,14 +11,16 @@
     <script src="codemirror/codemirror.js"></script>
     <link rel="stylesheet" href="codemirror/codemirror.css">
     <link rel="stylesheet" href="codemirror/material.css">
+    <script src="codemirror/foldcode.js"></script>
+    <script src="codemirror/foldgutter.js"></script>
+    <link rel="stylesheet" href="codemirror/foldgutter.css">
     <script src="codemirror/javascript.min.js"></script>
     <script src="codemirror/css.min.js"></script>
     <script src="codemirror/htmlmixed.min.js"></script>
     <script src="codemirror/python.min.js"></script>
     <script src="codemirror/xml.min.js"></script>
     <script src="codemirror/javascript-lint.min.js"></script>
-    <!--include utils-->
-    <script src="utils/.js"></script>
+
     <!--include editors-->
     <script src="editors/editor.js"></script>
     <!--include filehanders-->
@@ -31,12 +33,14 @@
             <div id="sidebar" style="background-color:rgb(32, 39, 45)" class="col-3 m-0">
                 <h1 style="color:whitesmoke">Browser IDE</h1>
                 <button class="btn btn-primary" onclick="loadFolder.getFile()">Load Directory</button>
+                <!--
                 <button class="btn btn-outline-primary">Load File</button>
                 <button class="btn btn-outline-primary">Start from Scratch</button>
+                -->
             </div>
           <div class="col-9 m-0 p-0">
-            <ul class="nav nav-tabs"></ul>
-            <div id="editor"></div>
+            <ul class="nav nav-tabs navbar-fixed-top"></ul>
+            <div id="editor" style="height:100%;overflow-y:auto"></div>
           </div>
       </div>
 

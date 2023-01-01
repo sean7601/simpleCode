@@ -40,6 +40,8 @@ editor.openFile = async function(uuid){
             lineNumbers: true,
             height: "auto",
             theme: "material",
+            foldGutter: true,
+            gutters: ["CodeMirror-linenumbers", "CodeMirror-foldgutter"]
         });
 
         editor.instance[uuid].on("change",function(){
@@ -47,6 +49,7 @@ editor.openFile = async function(uuid){
             let file = loadFolder.fileStructure.find(file => file.uuid == uuid)
             let fileHandle = file.entry
             let contents = editor.instance[uuid].getValue()
+            file.contents.edits.push(contents)
             file.text = contents
             fileHandle.createWritable().then(writable => {
                 writable.write(contents);
@@ -77,6 +80,8 @@ editor.openFile = async function(uuid){
                 lineNumbers: true,
                 height: "auto",
                 theme: "material",
+                foldGutter: true,
+                gutters: ["CodeMirror-linenumbers", "CodeMirror-foldgutter"]
             });
 
             editor.instance[uuid].on("change",function(){
@@ -84,6 +89,7 @@ editor.openFile = async function(uuid){
                 let file = loadFolder.fileStructure.find(file => file.uuid == uuid)
                 let fileHandle = file.entry
                 let contents = editor.instance[uuid].getValue()
+                file.contents.edits.push(contents)
                 file.contents.text = contents
                 fileHandle.createWritable().then(writable => {
                     writable.write(contents);
@@ -131,6 +137,9 @@ editor.addFile = async function(){
                 lineNumbers: true,
                 height: "auto",
                 theme: "material",
+                foldGutter: true,
+                gutters: ["CodeMirror-linenumbers", "CodeMirror-foldgutter"]
+
             });
             /*
             editor.instance[uuid].on("change",function(){
@@ -149,4 +158,25 @@ editor.addFile = async function(){
         reader.readAsText(file);
     })
     
+}
+
+editor.saveAll = function(){
+    for(let uuid in editor.instance){
+        let file = loadFolder.fileStructure.find(file => file.uuid == uuid)
+        let fileHandle = file.entry
+        let contents = editor.instance[uuid].getValue()
+        file.text = contents
+        fileHandle.createWritable().then(writable => {
+            writable.write(contents);
+            writable.close();
+        })
+    }
+
+    //change the #saveButton to success for 5 seconds then back to primary
+    $("#saveButton").removeClass("btn-outline-primary")
+    $("#saveButton").addClass("btn-outline-success")
+    setTimeout(function(){
+        $("#saveButton").removeClass("btn-outline-success")
+        $("#saveButton").addClass("btn-outline-primary")
+    },5000)
 }
