@@ -15,7 +15,7 @@ loadFolder.init = function() {
             let reader = new FileReader();
             reader.onload = function(e) {
                 let item = document.createElement('li');
-                item.textContent = file.webkitRelativePath;
+                item.textContent = k0file.webkitRelativePath;
                 let fileData = {}
                 fileData.name = file.webkitRelativePath
                 fileData.path = fileData.name.split('/')
@@ -75,31 +75,47 @@ loadFolder.getFile = async function() {
     */
 }
 
+loadFolder.click = function(){
+    console.log(Math.random())
+}
+
 loadFolder.recursivelyWriteDirectoryHtml = function(html,directory){
+    //call click when ul is clicke, but dont propagate up to parent element
     html += "<ul  style='color:white'>"
     for(let i = 0; i < directory.files.length; i++){
-        html += "<li class='file' style='list-style-type: disc' onclick=editor.openFile('"+directory.files[i].uuid+"')>" + directory.files[i].name + "</li>"
+        html += "<li class='file' style='list-style-type: disc' onclick=\"event.stopPropagation();editor.openFile('"+directory.files[i].uuid+"')\">" + directory.files[i].name + "</li>"
     }
     for(let key in directory.directories){
-        html += "<li  style='list-style-type: square;'>" + key + loadFolder.recursivelyWriteDirectoryHtml("",directory.directories[key]) + "</li>"
+        directory.directories[key].uuid = loadFolder.createUuid()
+        html += "<li  style='list-style-type: square;' onclick='event.stopPropagation();loadFolder.toggleAccordion(this.id)' id='"+directory.directories[key].uuid+"'>" + key + loadFolder.recursivelyWriteDirectoryHtml("",directory.directories[key]) + "</li>"
     }
     html += "</ul>"
     return html
 }
 
 loadFolder.toggleAccordion = function(id){
-    //make the list items that are class file visible
-    let list = document.getElementById(id).querySelectorAll("li");
-    for(let i = 0; i < list.length; i++){
-        if(list[i].classList.contains('file')){
-            if(list[i].style.display == "none"){
-                list[i].style.display = ""
-            }
-            else{
-                list[i].style.display = "none"
-            }
+    //if the element's children are hidden, show them, otherwise hide them
+    let element = document.getElementById(id)
+    console.log(id)
+    console.log(element)
+    let children = element.children
+    console.log(children)
+ 
+    //if there are no children, return
+    if(children.length == 0){
+        return
+    }
+    if(children[0].style.display == "none"){
+        for(let i = 0; i < children.length; i++){
+            children[i].style.display = "block"
         }
     }
+    else{
+        for(let i = 0; i < children.length; i++){
+            children[i].style.display = "none"
+        }
+    }
+
 
 }
 

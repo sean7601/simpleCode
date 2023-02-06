@@ -31,7 +31,7 @@ editor.openFile = async function(uuid){
         $(".nav").append(`<li class="nav-item">
             <a class="nav-link active" id="nav-${uuid}" aria-current="page" href="#">
                 <span onclick=editor.openFile('${uuid}')>${file.name}</span>
-                <span class='m-3' onclick=editor.deleteTab('${uuid}')>&#10006;</span>
+                <span class='m-3' onclick=editor.deleteTab('${uuid}')>X</span>
             </a>
         </li>`)
         editor.instance[uuid] = CodeMirror(document.getElementById("editor-"+uuid), {
@@ -71,7 +71,7 @@ editor.openFile = async function(uuid){
             $(".nav").append(`<li class="nav-item">
                 <a class="nav-link active" id="nav-${uuid}" aria-current="page" href="#">
                     <span onclick=editor.openFile('${uuid}')>${file.name}</span>
-                    <span class='m-3' onclick=editor.deleteTab('${uuid}')>&#10006;</span>
+                    <span class='m-3' onclick=editor.deleteTab('${uuid}')>X</span>
                 </a>
             </li>`)
             editor.instance[uuid] = CodeMirror(document.getElementById("editor-"+uuid), {

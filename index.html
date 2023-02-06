@@ -29,8 +29,8 @@
     
     <body  style="background-color:rgb(32, 39, 45)">
         <!--make a sidebar and a main content divqDEEedXEDX-->
-        <div class="row p-0 m-1">
-            <div id="sidebar" style="background-color:rgb(32, 39, 45)" class="col-3 m-0">
+        <div class="row p-0 m-1" style="height:90vh">
+            <div id="sidebar" style="background-color:rgb(32, 39, 45);max-height:90vh;overflow-y:auto" class="col-3 m-0">
                 <h1 style="color:whitesmoke">Browser IDE</h1>
                 <button class="btn btn-primary" onclick="loadFolder.getFile()">Load Directory</button>
                 <!--
@@ -40,12 +40,13 @@
             </div>
           <div class="col-9 m-0 p-0">
             <ul class="nav nav-tabs navbar-fixed-top"></ul>
-            <div id="editor" style="height:100%;overflow-y:auto"></div>
+            <div id="editor" style="max-height:90vh;"></div>
           </div>
       </div>
 
     </body>
     <script>
+        //get height of 
         /*var myCodeMirror = CodeMirror(document.body, {
             value: "function myScript(){return 100;}\n",
             mode:  "javascript",
