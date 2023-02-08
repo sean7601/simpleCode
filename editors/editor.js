@@ -23,8 +23,17 @@ editor.openFile = async function(uuid){
     if(mode == "py"){
         mode = "python"
     }
-    file = file.contents
-    if(file.hasOwnProperty("text")){
+
+    //re-read the file from the handle
+    var fileObj = await file.entry.getFile()
+
+    //read the fileObj
+    fileObj = await fileObj.text()
+
+    file.contents = fileObj
+    file.text = fileObj
+    console.log(fileObj)
+    console.log(file)
         //hide all editors
         $(".editor").hide()
         $("#editor").append("<div class='editor' id='editor-"+uuid+"'></div>")
@@ -59,46 +68,7 @@ editor.openFile = async function(uuid){
 
             
         })
-    }
-    else{
-        
-        let reader = new FileReader();
-        reader.onload = function(e) {
-            //hide all editors
-            $(".editor").hide()
-            file.text = e.target.result
-            $("#editor").append("<div class='editor' id='editor-"+uuid+"'></div>")
-            $(".nav").append(`<li class="nav-item">
-                <a class="nav-link active" id="nav-${uuid}" aria-current="page" href="#">
-                    <span onclick=editor.openFile('${uuid}')>${file.name}</span>
-                    <span class='m-3' onclick=editor.deleteTab('${uuid}')>X</span>
-                </a>
-            </li>`)
-            editor.instance[uuid] = CodeMirror(document.getElementById("editor-"+uuid), {
-                value: e.target.result,
-                mode:  mode,
-                lineNumbers: true,
-                height: "auto",
-                theme: "material",
-                foldGutter: true,
-                gutters: ["CodeMirror-linenumbers", "CodeMirror-foldgutter"]
-            });
-
-            editor.instance[uuid].on("change",function(){
-                //save the file
-                let file = loadFolder.fileStructure.find(file => file.uuid == uuid)
-                let fileHandle = file.entry
-                let contents = editor.instance[uuid].getValue()
-                file.contents.edits.push(contents)
-                file.contents.text = contents
-                fileHandle.createWritable().then(writable => {
-                    writable.write(contents);
-                    writable.close();
-                })
-            })
-        }
-        reader.readAsText(file);
-    }
+    
 }
 
 editor.deleteTab = function(uuid){

@@ -25,7 +25,13 @@
     <script src="editors/editor.js"></script>
     <!--include filehanders-->
     <script src="filehandlers/loadFolder.js"></script>
-
+    <style>
+        ul{ list-style: none; padding:0;  margin:0;  }
+        li{ padding-left: 1em; text-indent: -1em;    }
+        li.directoryOpen:before { content: ">" !important; padding-right:7px ; }
+        li.directoryClose:before { content: "^" !important; padding-right:7px ; }
+        li.file:before { content: "-" !important; padding-right:7px ; }
+    </style>
     
     <body  style="background-color:rgb(32, 39, 45)">
         <!--make a sidebar and a main content divqDEEedXEDX-->
