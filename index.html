@@ -66,13 +66,15 @@
 
     </body>
     <script>
-        //get height of 
-        /*var myCodeMirror = CodeMirror(document.body, {
-            value: "function myScript(){return 100;}\n",
-            mode:  "javascript",
-            lineNumbers: true,
+        //press ctrl + s to save
+        document.addEventListener('keydown', e => {
+            if (e.ctrlKey && e.key === 's') {
+                // Prevent the Save dialog to open
+                e.preventDefault();
+                // Place your code here
+                editor.saveAll()
+            }
         });
-        */
 
     </script>
 </html>

@@ -58,17 +58,9 @@ editor.openFile = async function(uuid){
         });
 
         editor.instance[uuid].on("change",function(){
-            //save the file
-            let file = loadFolder.fileStructure.find(file => file.uuid == uuid)
-            let fileHandle = file.entry
-            let contents = editor.instance[uuid].getValue()
-            file.contents.edits.push(contents)
-            file.text = contents
-            fileHandle.createWritable().then(writable => {
-                writable.write(contents);
-                writable.close();
-            })
-            //re read the file from loadFolder.fileHandle object and update the loadFolder.fileStructure object
+            $("#saveButton").removeClass("btn-outline-secondary")
+            $("#saveButton").removeClass("btn-outline-success")
+            $("#saveButton").addClass("btn-outline-danger")
 
             
         })
@@ -148,6 +140,7 @@ editor.saveAll = function(){
 
     //change the #saveButton to success for 5 seconds then back to primary
     $("#saveButton").removeClass("btn-outline-primary")
+    $("#saveButton").removeClass("btn-outline-danger")
     $("#saveButton").addClass("btn-outline-success")
     setTimeout(function(){
         $("#saveButton").removeClass("btn-outline-success")
