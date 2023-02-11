@@ -49,8 +49,12 @@ editor.openFile = async function(uuid){
             lineNumbers: true,
             height: "auto",
             theme: "material",
+            matchBrackets: true,
+            autoCloseBrackets: true,
             foldGutter: true,
-            gutters: ["CodeMirror-linenumbers", "CodeMirror-foldgutter"]
+            gutters: ["CodeMirror-linenumbers", "CodeMirror-foldgutter"],
+            lineWrapping: true,
+            extraKeys: {"Ctrl-F": "findPersistent","Ctrl-Q": function(cm){ cm.foldCode(cm.getCursor()); }},
         });
 
         editor.instance[uuid].on("change",function(){
