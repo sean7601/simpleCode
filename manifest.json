@@ -1,0 +1,30 @@
+{
+  "short_name": "SimpleCode",
+  "name": "SimpleCode",
+  "icons": [
+    {
+      "src": "/images/icon_x512.png",
+      "type": "image/png",
+      "sizes": "512x512",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/images/icon_x192.png",
+      "type": "image/png",
+      "sizes": "192x192",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": [
+    "productivity",
+    "utilities"
+  ],
+  "id": "/index.html",
+  "start_url": "/index.html",
+  "display": "standalone",
+  "scope": "/",
+  "lang": "en-US",
+  "theme_color": "#20272d",
+  "background_color": "#20272d",
+  "description": "A solution for those who need a code editor but can't install anything on their machine."
+}
