@@ -1,80 +1,139 @@
-<html>
-    <head>
-        <title>Browser IDE</title>
-    </head>
-    <!--include jquery-->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <!--include bootstrap-->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
-    <!--include codemirror-->
-    <script src="codemirror/codemirror.js"></script>
-    <link rel="stylesheet" href="codemirror/codemirror.css">
-    <link rel="stylesheet" href="codemirror/material.css">
-    <link rel="stylesheet" href="codemirror/dialog.css">
+<!DOCTYPE html>
+<html lang="en">
 
-    
-    <script src="codemirror/foldcode.js"></script>
-    <script src="codemirror/foldgutter.js"></script>
-    <script src="codemirror/brace-fold.js"></script>
-    <script src="codemirror/dialog.js"></script>
-    <script src="codemirror/searchcursor.js"></script>
-    <script src="codemirror/search.js"></script>
-    <script src="codemirror/annotatescrollbar.js"></script>
-    <script src="codemirror/matchesonscrollbar.js"></script> 
-    <script src="codemirror/jump-to-line.js"></script>
-    <script src="codemirror/closebrackets.js"></script>
-    <script src="codemirror/matchbrackets.js"></script>
-    <script src="codemirror/javascript-hint.js"></script>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Browser IDEs</title>
+    <meta name="description"
+        content="SimpleCode: A solution for those who need a code editor but can't install anything on their machine and don't have internet access.">
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" sizes="192x192" href="./images/icon_x192.png">
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#20272d">
+    <!-- PWA icons for iOS -->
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/apple-touch-icon-120x120.png">
 
-    <link rel="stylesheet" href="codemirror/foldgutter.css">
-    <script src="codemirror/javascript.min.js"></script>
-    <script src="codemirror/css.min.js"></script>
-    <script src="codemirror/htmlmixed.min.js"></script>
-    <script src="codemirror/python.min.js"></script>
-    <script src="codemirror/xml.min.js"></script>
-    <script src="codemirror/javascript-lint.min.js"></script>
+</head>
 
-    <!--include editors-->
-    <script src="editors/editor.js"></script>
-    <!--include filehanders-->
-    <script src="filehandlers/loadFolder.js"></script>
-    <style>
-        ul{ list-style: none; padding:0;  margin:0;  }
-        li{ padding-left: 1em; text-indent: -1em;    }
-        li.directoryOpen:before { content: ">" !important; padding-right:7px ; }
-        li.directoryClose:before { content: "^" !important; padding-right:7px ; }
-        li.file:before { content: "-" !important; padding-right:7px ; }
-    </style>
-    
-    <body  style="background-color:rgb(32, 39, 45)">
-        <!--make a sidebar and a main content divqDEEedXEDX-->
-        <div class="row p-0 m-1" style="height:90vh">
-            <div id="sidebar" style="background-color:rgb(32, 39, 45);max-height:90vh;overflow-y:auto" class="col-3 m-0">
-                <h1 style="color:whitesmoke">Browser IDE</h1>
-                <button class="btn btn-primary" onclick="loadFolder.getFile()">Load Directory</button>
-                <!--
+
+
+<style nonce="PADAWAN_CSP_NONCE">
+    ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    li {
+        padding-left: 1em;
+        text-indent: -1em;
+    }
+
+    li.directoryOpen:before {
+        content: ">" !important;
+        padding-right: 7px;
+    }
+
+    li.directoryClose:before {
+        content: "^" !important;
+        padding-right: 7px;
+    }
+
+    li.file:before {
+        content: "-" !important;
+        padding-right: 7px;
+    }
+</style>
+
+<body style="background-color:rgb(32, 39, 45)">
+    <!--make a sidebar and a main content divqDEEedXEDX-->
+    <div class="row p-0 m-1" style="height:90vh">
+        <div id="sidebar" style="background-color:rgb(32, 39, 45);max-height:90vh;overflow-y:auto" class="col-3 m-0">
+            <h1 style="color:whitesmoke">Browser IDE</h1>
+            <button class="btn btn-primary" onclick="loadFolder.getFile()">Load Directory</button>
+            <!--
                 <button class="btn btn-outline-primary">Load File</button>
                 <button class="btn btn-outline-primary">Start from Scratch</button>
                 -->
-            </div>
-          <div class="col-9 m-0 p-0">
+        </div>
+        <div class="col-9 m-0 p-0">
             <ul class="nav nav-tabs navbar-fixed-top"></ul>
             <div id="editor" style="max-height:90vh;"></div>
-          </div>
-      </div>
+        </div>
+    </div>
 
-    </body>
-    <script>
-        //press ctrl + s to save
-        document.addEventListener('keydown', e => {
-            if (e.ctrlKey && e.key === 's') {
-                // Prevent the Save dialog to open
-                e.preventDefault();
-                // Place your code here
-                editor.saveAll()
-            }
+</body>
+
+<!--include jquery-->
+<script nonce="PADAWAN_CSP_NONCE" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<!--include bootstrap-->
+<link nonce="PADAWAN_CSP_NONCE" rel="stylesheet"
+    href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+<script nonce="PADAWAN_CSP_NONCE" src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+<!-- include WorkBox -->
+<script nonce="PADAWAN_CSP_NONCE"
+    src="https://storage.googleapis.com/workbox-cdn/releases/6.2.0/workbox-sw.js"></script>
+
+
+<!--include editors-->
+<script src="editors/editor.js"></script>
+<!--include filehanders-->
+<script src="filehandlers/loadFolder.js"></script>
+
+<!--include codemirror-->
+<script src="codemirror/codemirror.js"></script>
+<link rel="stylesheet" href="codemirror/codemirror.css">
+<link rel="stylesheet" href="codemirror/material.css">
+<link rel="stylesheet" href="codemirror/dialog.css">
+
+
+<script src="codemirror/foldcode.js"></script>
+<script src="codemirror/foldgutter.js"></script>
+<script src="codemirror/brace-fold.js"></script>
+<script src="codemirror/dialog.js"></script>
+<script src="codemirror/searchcursor.js"></script>
+<script src="codemirror/search.js"></script>
+<script src="codemirror/annotatescrollbar.js"></script>
+<script src="codemirror/matchesonscrollbar.js"></script>
+<script src="codemirror/jump-to-line.js"></script>
+<script src="codemirror/closebrackets.js"></script>
+<script src="codemirror/matchbrackets.js"></script>
+<script src="codemirror/javascript-hint.js"></script>
+
+<link rel="stylesheet" href="codemirror/foldgutter.css">
+<script src="codemirror/javascript.min.js"></script>
+<script src="codemirror/css.min.js"></script>
+<script src="codemirror/htmlmixed.min.js"></script>
+<script src="codemirror/python.min.js"></script>
+<script src="codemirror/xml.min.js"></script>
+<script src="codemirror/javascript-lint.min.js"></script>
+
+<script nonce="PADAWAN_CSP_NONCE">
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', function () {
+            navigator.serviceWorker.register('/service-worker.js').then(function (registration) {
+                console.log('Service worker registered with scope: ', registration.scope);
+            }, function (err) {
+                console.log('Service worker registration failed: ', err);
+            });
         });
+    }
+</script>
 
-    </script>
+<script nonce="PADAWAN_CSP_NONCE">
+    //press ctrl + s to save
+    document.addEventListener('keydown', e => {
+        if (e.ctrlKey && e.key === 's') {
+            // Prevent the Save dialog to open
+            e.preventDefault();
+            // Place your code here
+            editor.saveAll()
+        }
+    });
+</script>
+
 </html>
